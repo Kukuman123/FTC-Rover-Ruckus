@@ -189,7 +189,7 @@ public class AutoMecanumDistance extends LinearOpMode {
         }
       }
       if (x1>x2) {
-        spinleft(-degrees);
+        spinleft(degrees);
         //stopMotor();
         if (angles.firstAngle < angleDeg) {
           spinleft();
