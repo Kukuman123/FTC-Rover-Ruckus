@@ -1,0 +1,140 @@
+package org.firstinspires.ftc.teamcode;
+
+import com.qualcomm.robotcore.hardware.Servo;
+import org.firstinspires.ftc.robotcore.external.navigation.Position;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import java.util.List;
+import org.firstinspires.ftc.robotcore.external.ClassFactory;
+
+
+@Autonomous(name = "AutoMecanum", group = "Concept")
+
+public class AutoMecanum extends LinearOpMode {
+    
+  
+    
+
+   
+    private ElapsedTime runtime = new ElapsedTime();
+    
+    
+    private DcMotor frontleftmotor = null;
+    private DcMotor frontrightmotor = null;
+    private DcMotor backleftmotor = null;
+    private DcMotor backrightmotor = null;
+    
+    
+  
+
+    @Override
+    public void runOpMode() {
+        frontleftmotor = hardwareMap.get(DcMotor.class, "frontleftmotor");
+        frontrightmotor = hardwareMap.get(DcMotor.class, "frontrightmotor");
+        backrightmotor = hardwareMap.get(DcMotor.class, "backrightmotor");
+        backleftmotor = hardwareMap.get(DcMotor.class, "backleftmotor");
+        //frontleftmotor.setDirection(DcMotor.Direction.REVERSE);
+        //backleftmotor.setDirection(DcMotor.Direction.REVERSE);
+        
+        waitForStart();
+        test();
+        
+       }
+    
+
+   
+    private void moveForward(int sleep){
+      frontrightmotor.setPower(0.4);
+      frontleftmotor.setPower(-0.4);
+      backrightmotor.setPower(0.4);
+      backleftmotor.setPower(-0.4);
+      sleep(sleep);
+      stopMotor();
+      
+    }
+    
+    private void moveBackward(int sleep){
+      frontrightmotor.setPower(-0.4);
+      frontleftmotor.setPower(0.4);
+      backrightmotor.setPower(-0.4);
+      backleftmotor.setPower(0.4);
+      sleep(sleep);
+      stopMotor();
+    }
+    
+     private static int forward_backward_to_secs(distance){
+      int first_step = 13;
+      int next_steps = 8;
+      int sleep = Math.rint((((distance-first_step)/next_steps)*100)+100);
+      return sleep;
+    }
+    
+    private void spinleft(int degrees){
+      frontrightmotor.setPower(0.4);
+      frontleftmotor.setPower(0.4);
+      backrightmotor.setPower(0.4);
+      backleftmotor.setPower(0.4);
+      sleep(degrees);
+      stopMotor();
+    }
+    
+    private void spinright(int degrees){
+      frontrightmotor.setPower(-0.4);
+      frontleftmotor.setPower(-0.4);
+      backrightmotor.setPower(-0.4);
+      backleftmotor.setPower(-0.4);
+      sleep(degrees);
+      stopMotor();
+    }
+    
+    private void straferight(int sleep) {
+      frontleftmotor.setPower(-0.5);
+      backleftmotor.setPower(0.5);
+      frontrightmotor.setPower(-0.5);
+      backrightmotor.setPower(0.5);
+      sleep(sleep);
+    }
+    
+    private void strafeleft(int sleep) {
+      frontleftmotor.setPower(0.5);
+      backleftmotor.setPower(-0.5);
+      frontrightmotor.setPower(0.5);
+      backrightmotor.setPower(-0.5);
+      sleep(sleep);
+      stopMotor();
+      }
+
+    private void stopMotor() {
+      frontleftmotor.setPower(0.0);
+      backleftmotor.setPower(0.0);
+      frontrightmotor.setPower(0.0);
+      backrightmotor.setPower(0.0);
+    }
+
+    private static void move(string Direction, double degree, double distance) {
+      if (Direction == "right") {
+        int degrees = Math.rint(8.05*degree);
+        spinright(degrees);
+        forward_backward_to_secs(distance);
+        moveForward(sleep);
+        }
+    }
+
+      if (Direction == "left") {
+        int degrees = Math.rint(8.05*degree);
+        spinleft(degrees);
+        forward_backward_to_secs(distance);
+        moveForw†ard(sleep);
+      }
+
+    private void test() {
+      //moveForward();
+      strafeleft();
+      sleep(200);
+      stop();
+        
+    }
+}
